@@ -1,0 +1,76 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+label {
+    display: block;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}
+
+</style>
+</head>
+<body>
+{% if user.is_authenticated %}
+    {% if user.is_manager %}
+      <h1>manager page</h1>
+      <h1>welcome {{user.username}} sir</h1>
+      <a href="{% url 'register' %}">Register new user</a> <br>
+      <a href="{% url 'logout' %}">Logout</a> <br>
+    {% else%}
+    {%if user.is_employee%}
+      <h1>employee page</h1>
+      <h1>welcome {{user.first_name}}</h1>
+      <a href="{% url 'employee:leave_form' %}">APPLY Leave</a> <br>
+      <a href="{% url 'logout' %}">Logout</a> <br>
+        {%else%}
+        <h1>admin portal<h1>
+        <h1>welcome {{user.username}} sir</h1>
+        <a href="{% url 'logout' %}">Logout</a> <br>
+    {% endif %}
+    {% endif %}
+{% else %}
+<h1>Welcome</h1>
+<a href="{% url 'login' %}">Login</a> 
+{% endif %}
+
+</body>
+</html>
